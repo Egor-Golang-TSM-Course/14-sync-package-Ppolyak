@@ -14,20 +14,20 @@ type BankAccount struct {
 
 func (b *BankAccount) Deposit(amount int) int {
 	b.mu.Lock()
+	defer b.mu.Unlock()
 	b.balance = b.balance + amount
 	//fmt.Println(b.balance)
-	b.mu.Unlock()
 	return b.balance
 }
 
 func (b *BankAccount) Withdraw(amount int) int {
 	b.mu.Lock()
+	defer b.mu.Unlock()
 	if amount > b.balance {
 		fmt.Println("Withdraw bigger then your balance")
 	} else {
 		b.balance = b.balance - amount
 	}
-	b.mu.Unlock()
 	return b.balance
 }
 
